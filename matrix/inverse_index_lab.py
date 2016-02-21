@@ -57,10 +57,10 @@ def orSearch(inverseIndex, query):
     >>> orSearch(idx, ['Johann', 'Carl'])
     {0, 2, 3, 4, 5}
     """
-    docs = {}
+    docs = set()
     for w in query:
-        if query in inverseIndex:
-            docs.update(inverseIndex.get(query))
+        if w in inverseIndex:
+            docs.update(inverseIndex[w])
     return docs
 
 
@@ -78,7 +78,9 @@ def andSearch(inverseIndex, query):
     >>> andSearch(idx, ['Johann', 'Bach'])
     {0, 4}
     """
-    
+    sets = [inverseIndex[w] for w in query if w in inverseIndex]
+    return set.intersection(*sets)
+
 
 if __name__ == "__main__":
     import doctest
